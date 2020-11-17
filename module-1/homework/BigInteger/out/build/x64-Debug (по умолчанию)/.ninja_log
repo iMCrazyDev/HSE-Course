@@ -6,3 +6,7 @@
 5010	5179	627346805	lib/gtestd.lib	f9d10cb9dc104ffe
 5179	5293	627346805	lib/gtest_maind.lib	c5e63b7071f1ee9a
 5293	6415	627346806	biginteger.exe	16d0bc43a939e159
+1	715	627348088	CMakeFiles/biginteger.dir/biginteger.cpp.obj	8e456bb77697fbde
+722	1142	627348088	biginteger.exe	16d0bc43a939e159
+1	1024	627348692	CMakeFiles/biginteger.dir/biginteger.cpp.obj	8e456bb77697fbde
+1026	1427	627348692	biginteger.exe	16d0bc43a939e159
