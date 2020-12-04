@@ -1,4 +1,3 @@
-
 //
 // Created by Dev1l on 11.09.2020.
 //
@@ -8,33 +7,33 @@
 const int base = 1e9;
 #define PI 3.14159265358979323846
 typedef std::complex<double> cmplex;
-void BigInteger::Sum(BigInteger& bi, const BigInteger& bi2)
+void BigInteger::Sum(BigInteger& lhs, const BigInteger& rhs)
 {
-	BigInteger copy = BigInteger(bi2);
+	BigInteger copy = BigInteger(rhs);
 	//TODO: сделать хд
-	if (bi.sign == -1 && bi2.sign == -1)
+	if (lhs.sign == 1 && rhs.sign == 1)
 	{
-		bi = -bi;
+		lhs = -lhs;
 		copy = -copy;
-		Sum(bi, copy);
-		RevSign(bi);
+		Sum(lhs, copy);
+		RevSign(lhs);
 	}
-	else if (bi.sign == -1)
+	else if (lhs.sign == 1)
 	{
-		Sum(copy, bi);
-		bi = copy;
-		RevSign(bi);
+		Sum(copy, lhs);
+		lhs = copy;
+		RevSign(lhs);
 	}
 
-	if (bi2.sign == -1)
+	if (rhs.sign == 1)
 	{
-		if (bi < -bi2)
+		if (lhs < -rhs)
 		{
-			bi = -bi;
+			lhs = -lhs;
 			copy = -copy;
-			Sum(copy, bi);
-			bi = copy;
-			RevSign(bi);
+			Sum(copy, lhs);
+			lhs = copy;
+			RevSign(lhs);
 
 		}
 		else
@@ -42,86 +41,86 @@ void BigInteger::Sum(BigInteger& bi, const BigInteger& bi2)
 			int rems = 0;
 			int lastindnul = -1;
 
-			for (int i = 0; i < bi.vec.size(); i++)
+			for (int i = 0; i < lhs.vec.size(); i++)
 			{
-				if (bi.vec.size() == i) bi.vec.push_back(0);
-				bi.vec[i] += rems;
+				if (lhs.vec.size() == i) lhs.vec.push_back(0);
+				lhs.vec[i] += rems;
 
 				if (copy.vec.size() > i)
-					bi.vec[i] -= copy.vec[i];
+					lhs.vec[i] -= copy.vec[i];
 
-				if (bi.vec[i] == 0 && lastindnul == -1)
+				if (lhs.vec[i] == 0 && lastindnul == -1)
 				{
 					lastindnul = i;
 				}
 				else
 				{
 					lastindnul = -1;
-					if (bi.vec[i] < 0)
+					if (lhs.vec[i] < 0)
 					{
-						bi.vec[i] += base; rems -= 1;
+						lhs.vec[i] += base; rems -= 1;
 					}
 				}
-				//rems = bi.vec[i] / base;
-				//bi.vec[i] %= base;
+				//rems = lhs.vec[i] / base;
+				//lhs.vec[i] %= base;
 			}
-			if (lastindnul != -1) bi.vec.erase(bi.vec.begin() + lastindnul, bi.vec.end());
-			if (bi.vec.size() == 0) bi.vec.push_back(0);
+			if (lastindnul != -1) lhs.vec.erase(lhs.vec.begin() + lastindnul, lhs.vec.end());
+			if (lhs.vec.size() == 0) lhs.vec.push_back(0);
 		}
 	}
 	else
 	{
-		int mx = bi.vec.size();
+		int mx = lhs.vec.size();
 		if (copy.vec.size() > mx) mx = copy.vec.size();
 		int rems = 0;
 		for (int i = 0; (i < mx) || rems != 0; i++)
 		{
 			if (i == mx)
 			{
-				bi.vec.push_back(rems);
+				lhs.vec.push_back(rems);
 				break;
 			}
-			if (bi.vec.size() == i) bi.vec.push_back(0);
-			bi.vec[i] += rems;
+			if (lhs.vec.size() == i) lhs.vec.push_back(0);
+			lhs.vec[i] += rems;
 
 			if (copy.vec.size() > i)
-				bi.vec[i] += copy.vec[i];
+				lhs.vec[i] += copy.vec[i];
 
-			rems = bi.vec[i] / base;
-			bi.vec[i] %= base;
+			rems = lhs.vec[i] / base;
+			lhs.vec[i] %= base;
 		}
 	}
-	//return *bi;
+	//return *lhs;
 }
 
 void BigInteger::RevSign(BigInteger& bi)
 {
-	if (bi.sign == 0) bi.sign--;
-	else bi.sign++;
+	if (bi.sign == 0) bi.sign = 1;
+	else bi.sign = 0;
 }
 
-bool BigInteger::GreaterThan(const BigInteger& other) const
+bool BigInteger::GreaterThan(const BigInteger& rhs) const
 {
 	bool result = false;
 
-	if (sign == 0 && other.sign == -1) result = true;
-	else if (sign == -1 && other.sign == 0) result = false;
+	if (sign == 0 && rhs.sign == 1) result = true;
+	else if (sign == 1 && rhs.sign == 0) result = false;
 	else
 	{
-		if (vec.size() > other.vec.size()) result = true;
-		else if (vec.size() < other.vec.size()) result = false;
+		if (vec.size() > rhs.vec.size()) result = true;
+		else if (vec.size() < rhs.vec.size()) result = false;
 		else
 		{
 			for (int i = vec.size() - 1; i >= 0; i--)
 			{
-				if (vec[i] > other.vec[i]) result = true;
-				else if (vec[i] < other.vec[i]) result = false;
+				if (vec[i] > rhs.vec[i]) result = true;
+				else if (vec[i] < rhs.vec[i]) result = false;
 				else continue;
 				break;
 			}
 		}
 	}
-	if (other.sign == -1 && sign == -1) result = !result;
+	if (rhs.sign == 1 && sign == 1) result = !result;
 	return result;
 }
 
@@ -153,11 +152,11 @@ int BigInteger::Max(const int& a, const int& b)
 	return a > b ? a : b;
 }
 
-void BigInteger::Multiply(BigInteger& bi, const BigInteger& bi2)
+void BigInteger::Multiply(BigInteger& lhs, const BigInteger& rhs)
 {
-	std::vector<cmplex> fa(bi.vec.begin(), bi.vec.end()), fb(bi2.vec.begin(), bi2.vec.end());
+	std::vector<cmplex> fa(lhs.vec.begin(), lhs.vec.end()), fb(rhs.vec.begin(), rhs.vec.end());
 	size_t n = 1;
-	while (n < Max((int)bi.vec.size(), (int)bi2.vec.size()))  n <<= 1;
+	while (n < Max((int)lhs.vec.size(), (int)rhs.vec.size()))  n <<= 1;
 	n <<= 1;
 	fa.resize(n), fb.resize(n);
 
@@ -172,20 +171,20 @@ void BigInteger::Multiply(BigInteger& bi, const BigInteger& bi2)
 	int bb3 = res.size() - 1;
 	while (bb3 > 0 && res[bb3] == 0) bb3--;
 	res.erase(res.begin() + bb3 + 1, res.end());
-	bi.vec = res;
+	lhs.vec = res;
 
-	if (bi.sign != bi2.sign) RevSign(bi);
+	if (lhs.sign != rhs.sign) RevSign(lhs);
 }
 
 
-BigInteger BigInteger::Divide(const BigInteger& bi, const BigInteger& bi2)
+BigInteger BigInteger::Divide(const BigInteger& lhs, const BigInteger& rhs)
 {
-	BigInteger b1 = BigInteger(bi);
-	BigInteger b2 = BigInteger(bi2);
+	BigInteger b1 = BigInteger(lhs);
+	BigInteger b2 = BigInteger(rhs);
 	BigInteger b3 = BigInteger(1);
 	int a = 0;
-	if (bi.sign == -1) { a++; RevSign(b1); }
-	if (bi2.sign == -1) { a++; RevSign(b2); }
+	if (lhs.sign == 1) { a++; RevSign(b1); }
+	if (rhs.sign == 1) { a++; RevSign(b2); }
 	BigInteger res = Divide(b1, b2, b3, b1);
 
 	if (a % 2 == 0) return res;
@@ -194,19 +193,19 @@ BigInteger BigInteger::Divide(const BigInteger& bi, const BigInteger& bi2)
 	}
 }
 
-BigInteger BigInteger::Divide(const BigInteger& bi, int i2)
+BigInteger BigInteger::Divide(const BigInteger& lhs, int rhs)
 {
-	int i3 = i2;
+	int i3 = rhs;
 	BigInteger res;
 	res.vec.clear();
-	res.sign = bi.sign;
+	res.sign = lhs.sign;
 	if (i3 < 0) {
 		RevSign(res); i3 = -i3;
 	}
 	int cry = 0;
-	for (int i = bi.vec.size() - 1; i >= 0; i--)
+	for (int i = lhs.vec.size() - 1; i >= 0; i--)
 	{
-		int val = bi.vec[i];
+		int val = lhs.vec[i];
 		long long curval = val + cry * 1LL * base;
 		res.vec.insert(res.vec.begin(), curval / i3);
 		cry = curval % i3;
@@ -214,37 +213,37 @@ BigInteger BigInteger::Divide(const BigInteger& bi, int i2)
 
 	return res;
 }
-BigInteger BigInteger::Divide(BigInteger& bi, BigInteger& bi2, BigInteger& start, BigInteger& end)
+BigInteger BigInteger::Divide(BigInteger& lhs, BigInteger& rhs, BigInteger& start, BigInteger& end)
 {
 	BigInteger current = Divide((end + start), 2);
 	BigInteger plus_one = current + BigInteger(1);
 	BigInteger minus_one = current - BigInteger(1);
 
-	BigInteger val = current * bi2;
-	BigInteger next = plus_one * bi2;
-	BigInteger prev = minus_one * bi2;
+	BigInteger val = current * rhs;
+	BigInteger next = plus_one * rhs;
+	BigInteger prev = minus_one * rhs;
 
-	/*BigInteger val = Multiply(current, bi2);
-	BigInteger next = Multiply(plus_one, bi2);
-	BigInteger prev = Multiply(minus_one, bi2);*/
+	/*BigInteger val = Multiply(current, rhs);
+	BigInteger next = Multiply(plus_one, rhs);
+	BigInteger prev = Multiply(minus_one, rhs);*/
 
-	if (val == bi || (val < bi && next > bi))
+	if (val == lhs || (val < lhs && next > lhs))
 	{
 		return current;
 	}
-	else if (val > bi && prev < bi)
+	else if (val > lhs && prev < lhs)
 	{
 		return minus_one;
 	}
-	else if (val < bi)
+	else if (val < lhs)
 	{
-		return Divide(bi, bi2, plus_one, end);
+		return Divide(lhs, rhs, plus_one, end);
 	}
-	else if (val > bi)
+	else if (val > lhs)
 	{
-		return Divide(bi, bi2, start, minus_one);
+		return Divide(lhs, rhs, start, minus_one);
 	}
-	return bi;
+	return lhs;
 }
 
 void BigInteger::Reset()
@@ -254,10 +253,10 @@ void BigInteger::Reset()
 	vec.push_back(0);
 }
 
-void BigInteger::Set(BigInteger& bi)
+void BigInteger::Set(BigInteger& rhs)
 {
-	this->vec = bi.vec;
-	this->sign = bi.sign;
+	this->vec = rhs.vec;
+	this->sign = rhs.sign;
 }
 
 std::string BigInteger::toString()
@@ -269,7 +268,7 @@ std::string BigInteger::toString()
 		result = std::to_string(z) + result;
 	}
 
-	if (sign == -1) result = "-" + result;
+	if (sign == 1) result = "-" + result;
 	return result;
 }
 
@@ -279,7 +278,7 @@ BigInteger::BigInteger()
 	vec.push_back(0);
 }
 
-BigInteger::BigInteger(int sig, std::vector<uint> ve)
+BigInteger::BigInteger(int sig, std::vector<unsigned int> ve)
 {
 	BigInteger::vec = ve;
 	BigInteger::sign = sig;
@@ -318,7 +317,7 @@ BigInteger::operator std::string()
 BigInteger::BigInteger(int inp)
 {
 	sign = 0;
-	if (inp < 0) { sign--; inp *= -1; }
+	if (inp < 0) { sign = 1; inp *= -1; }
 	vec.push_back(inp);
 }
 
@@ -334,12 +333,12 @@ BigInteger::BigInteger(std::string& str)
 
 BigInteger::BigInteger(const BigInteger& bi) : vec(bi.vec), sign(bi.sign) {}
 
-BigInteger& BigInteger::operator=(const BigInteger& right)
+BigInteger& BigInteger::operator=(const BigInteger& rhs)
 {
-	if (this != &right)
+	if (this != &rhs)
 	{
-		vec = right.vec;
-		sign = right.sign;
+		vec = rhs.vec;
+		sign = rhs.sign;
 	}
 	return *this;
 }
@@ -348,30 +347,30 @@ BigInteger& BigInteger::operator=(int& inp)
 {
 	vec.clear();
 	sign = 0;
-	if (inp < 0) { sign--; inp *= -1; }
+	if (inp < 0) { sign = 1; inp *= -1; }
 	vec.push_back(inp);
 	return *this;
 }
 
 
 
-BigInteger operator*(const BigInteger& me, const BigInteger& add)
+BigInteger operator*(const BigInteger& lhs, const BigInteger& rhs)
 {
-	BigInteger bb3 = me;
-	bb3 *= add;
+	BigInteger bb3 = lhs;
+	bb3 *= rhs;
 	return bb3;
 }
 
-BigInteger& BigInteger::operator*=(const BigInteger& add)
+BigInteger& BigInteger::operator*=(const BigInteger& rhs)
 {
-	Multiply(*this, add);
+	Multiply(*this, rhs);
 	return *this;
 }
 
-BigInteger operator+(const BigInteger& bi, const BigInteger& bi2)
+BigInteger operator+(const BigInteger& lhs, const BigInteger& rhs)
 {
-	BigInteger _bi = bi;
-	_bi += bi2;
+	BigInteger _bi = lhs;
+	_bi += rhs;
 	return _bi;
 }
 
@@ -402,10 +401,10 @@ BigInteger& BigInteger::operator--()
 }
 
 
-BigInteger operator-(const BigInteger& _add, const BigInteger& add)
+BigInteger operator-(const BigInteger& lhs, const BigInteger& rhs)
 {
-	BigInteger bi = _add;
-	bi -= add;
+	BigInteger bi = lhs;
+	bi -= rhs;
 	return bi;
 }
 
@@ -416,54 +415,54 @@ BigInteger BigInteger::operator-() const
 	return bi;
 }
 
-BigInteger& BigInteger::operator+=(const BigInteger& add)
+BigInteger& BigInteger::operator+=(const BigInteger& rhs)
 {
-	Sum((*this), add);
+	Sum((*this), rhs);
 	return (*this);
 }
 
-BigInteger& BigInteger::operator-=(const BigInteger& add)
+BigInteger& BigInteger::operator-=(const BigInteger& rhs)
 {
-	Sum((*this), -add);
+	Sum((*this), -rhs);
 	return (*this);
 }
 
 
-BigInteger operator%(const BigInteger& bi, const BigInteger& bi2)
+BigInteger operator%(const BigInteger& lhs, const BigInteger& rhs)
 {
-	BigInteger bb3 = bi;
-	bb3 %= bi2;
+	BigInteger bb3 = lhs;
+	bb3 %= rhs;
 	return bb3;
 }
 
-BigInteger& BigInteger::operator%=(const BigInteger& bi)
+BigInteger& BigInteger::operator%=(const BigInteger& rhs)
 {
-	BigInteger res = (*this) - BigInteger::Divide((*this), bi) * bi;
+	BigInteger res = (*this) - BigInteger::Divide((*this), rhs) * rhs;
 	Set(res);
 	return *this;
 }
 
 
-BigInteger operator/(const BigInteger& bi, const BigInteger& bi2)
+BigInteger operator/(const BigInteger& lhs, const BigInteger& rhs)
 {
-	BigInteger bb3 = bi;
-	bb3 /= bi2;
+	BigInteger bb3 = lhs;
+	bb3 /= rhs;
 	return bb3;
 }
 
 
-BigInteger& BigInteger::operator/=(const BigInteger& bi)
+BigInteger& BigInteger::operator/=(const BigInteger& rhs)
 {
-	BigInteger res = Divide(*this, bi);
+	BigInteger res = Divide(*this, rhs);
 	Set(res);
 	return *this;
 }
 
 
 
-bool BigInteger::Equals(const BigInteger& bi) const
+bool BigInteger::Equals(const BigInteger& lhs) const
 {
-	return sign == bi.sign && vec == bi.vec;
+	return sign == lhs.sign && vec == lhs.vec;
 }
 
 std::ostream& operator<<(std::ostream& out, BigInteger& bi)
@@ -496,32 +495,32 @@ std::istream& operator>>(std::istream& in, BigInteger& bi)
 	return in;
 }
 
-bool operator==(const BigInteger& left, const BigInteger& right)
+bool operator==(const BigInteger& lhs, const BigInteger& rhs)
 {
-	return left.Equals(right);
+	return lhs.Equals(rhs);
 }
 
-bool operator!=(const BigInteger& left, const BigInteger& right)
+bool operator!=(const BigInteger& lhs, const BigInteger& rhs)
 {
-	return !left.Equals(right);
+	return !lhs.Equals(rhs);
 }
 
-bool operator>(const BigInteger& left, const BigInteger& right)
+bool operator>(const BigInteger& lhs, const BigInteger& rhs)
 {
-	return left.GreaterThan(right);
+	return lhs.GreaterThan(rhs);
 }
 
-bool operator>=(const BigInteger& left, const BigInteger& right)
+bool operator>=(const BigInteger& lhs, const BigInteger& rhs)
 {
-	return left.GreaterThan(right) || right.Equals(left);
+	return lhs.GreaterThan(rhs) || rhs.Equals(lhs);
 }
 
-bool operator<(const BigInteger& left, const  BigInteger& right)
+bool operator<(const BigInteger& lhs, const  BigInteger& rhs)
 {
-	return right.GreaterThan(left);
+	return rhs.GreaterThan(lhs);
 }
 
-bool operator<=(const BigInteger& left, const BigInteger& right)
+bool operator<=(const BigInteger& lhs, const BigInteger& rhs)
 {
-	return right.GreaterThan(left) || right.Equals(left);
+	return rhs.GreaterThan(lhs) || rhs.Equals(lhs);
 }
