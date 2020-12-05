@@ -70,7 +70,7 @@ TEST(IndexOf, Test1) {
 
     static_assert(IndexOf<actual, double>::pos == 1, "expected pos=1");
 }
-
+//
 TEST(IndexOf, Test2) {
     typedef TypeList<int, TypeList<double, NullType>> actual;
 
@@ -109,9 +109,8 @@ TEST(Replace, Test2) {
     testing::StaticAssertTypeEq<Replace<NullType, double, std::string>::NewTypeList, NullType>();
 }
 
-// TEST(TypeAt, Test1) {
-//     typedef TypeList<int, TypeList<double, NullType>> actual;
-//     typedef double expected;
-    
-//     ASSERT_TRUE(std::is_same<TypeAt<actual, 1>::TargetType, expected>::value);
-// }
+TEST(TypeAt, Test1) {
+    typedef TypeList<int, TypeList<double, NullType>> actual;
+    typedef double expected;
+    ASSERT_TRUE((std::is_same<TypeAt<actual, 1>::TargetType, expected>::value));
+}
