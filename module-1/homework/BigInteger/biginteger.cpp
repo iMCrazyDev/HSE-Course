@@ -5,12 +5,12 @@
 #include "BigInteger.h"
 
 const int base = 1e9;
-#define PI 3.14159265358979323846
+const double PI = 3.14159265358979323846;
 typedef std::complex<double> cmplex;
 void BigInteger::Sum(BigInteger& lhs, const BigInteger& rhs)
 {
 	BigInteger copy = BigInteger(rhs);
-	//TODO: сделать хд
+
 	if (lhs.sign == 1 && rhs.sign == 1)
 	{
 		lhs = -lhs;
@@ -41,7 +41,7 @@ void BigInteger::Sum(BigInteger& lhs, const BigInteger& rhs)
 			int rems = 0;
 			int lastindnul = -1;
 
-			for (int i = 0; i < lhs.vec.size(); i++)
+			for (size_t i = 0; i < lhs.vec.size(); i++)
 			{
 				if (lhs.vec.size() == i) lhs.vec.push_back(0);
 				lhs.vec[i] += rems;
@@ -61,8 +61,6 @@ void BigInteger::Sum(BigInteger& lhs, const BigInteger& rhs)
 						lhs.vec[i] += base; rems -= 1;
 					}
 				}
-				//rems = lhs.vec[i] / base;
-				//lhs.vec[i] %= base;
 			}
 			if (lastindnul != -1) lhs.vec.erase(lhs.vec.begin() + lastindnul, lhs.vec.end());
 			if (lhs.vec.size() == 0) lhs.vec.push_back(0);
@@ -70,10 +68,9 @@ void BigInteger::Sum(BigInteger& lhs, const BigInteger& rhs)
 	}
 	else
 	{
-		int mx = lhs.vec.size();
-		if (copy.vec.size() > mx) mx = copy.vec.size();
+		size_t mx = std::max(lhs.vec.size(), copy.vec.size());
 		int rems = 0;
-		for (int i = 0; (i < mx) || rems != 0; i++)
+		for (size_t i = 0; (i < mx) || rems != 0; i++)
 		{
 			if (i == mx)
 			{
@@ -90,7 +87,6 @@ void BigInteger::Sum(BigInteger& lhs, const BigInteger& rhs)
 			lhs.vec[i] %= base;
 		}
 	}
-	//return *lhs;
 }
 
 void BigInteger::RevSign(BigInteger& bi)
@@ -103,8 +99,8 @@ bool BigInteger::GreaterThan(const BigInteger& rhs) const
 {
 	bool result = false;
 
-	if (sign == 0 && rhs.sign == 1) result = true;
-	else if (sign == 1 && rhs.sign == 0) result = false;
+	if (sign == 0 && rhs.sign == 1) return true;
+	else if (sign == 1 && rhs.sign == 0) return false;
 	else
 	{
 		if (vec.size() > rhs.vec.size()) result = true;
@@ -222,10 +218,6 @@ BigInteger BigInteger::Divide(BigInteger& lhs, BigInteger& rhs, BigInteger& star
 	BigInteger val = current * rhs;
 	BigInteger next = plus_one * rhs;
 	BigInteger prev = minus_one * rhs;
-
-	/*BigInteger val = Multiply(current, rhs);
-	BigInteger next = Multiply(plus_one, rhs);
-	BigInteger prev = Multiply(minus_one, rhs);*/
 
 	if (val == lhs || (val < lhs && next > lhs))
 	{
