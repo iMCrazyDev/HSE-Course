@@ -12,5 +12,5 @@ struct TypeAt<TypeList<Head, Tail>, index> {
 
 template<typename Head, typename Tail>
 struct TypeAt<TypeList<Head, Tail>, 0> {
-	typedef typename Head TargetType;
+	typedef Head TargetType;
 };
