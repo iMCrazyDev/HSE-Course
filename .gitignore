@@ -1,0 +1,10 @@
+﻿################################################################################
+# Данный GITIGNORE-файл был автоматически создан Microsoft(R) Visual Studio.
+################################################################################
+
+/.idea
+/.vs
+/module-1/homework/List/build
+/module-1/homework/List/out/build
+/module-1/seminars
+/module-1/homework/List/CMakeFiles
