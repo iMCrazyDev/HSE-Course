@@ -3,6 +3,7 @@
 #include "typelist.h"
 
 template<typename TList, typename NewType>
+
 struct Append;
 
 template<typename Head,typename Tail, typename NewType>
@@ -22,3 +23,4 @@ template<>
 struct Append<NullType,NullType> {
 	typedef NullType NewTypeList;
 };
+
