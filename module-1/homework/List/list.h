@@ -10,6 +10,7 @@ class list {
 public:
 
     list();
+    list(const list& other);
     list(size_t count, const int& value = int());
 
     ~list();
@@ -40,11 +41,27 @@ public:
     void unique();
     void sort();
 
-    // Your code goes here?..
+    
 
 private:
 
-    // Your code goes here...
+    struct Node {
+        Node* prev;
+        Node* next;
+        
+        int value;
+
+        Node(Node* _prev, Node* _next, const int& val) : prev(_prev), next(_next), value(val) { }
+        Node() : prev(nullptr), next(nullptr), value(0) { }
+    };
+
+    void __push_first__(const int& value);
+    void __remove_node_(Node* nd);
+
+    Node* head;
+    Node* tail;
+
+    int _size;
 
 };
 
