@@ -1,0 +1,173 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4
+					],
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "index_of",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "index_of",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				},
+				{
+					"build" : "int2type",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "int2type",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "static_assert",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "static_assert",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"build" : "type2type",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "type2type",
+					"targetIndexes" : 
+					[
+						4,
+						5,
+						6
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					],
+					"name" : "seminar9",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "index_of_1::@3059e11fc9f65a544067",
+					"jsonFile" : "target-index_of_1-Debug-b9da22bacd427c9b540f.json",
+					"name" : "index_of_1",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "index_of_2::@3059e11fc9f65a544067",
+					"jsonFile" : "target-index_of_2-Debug-24e4b302106dfbb3f727.json",
+					"name" : "index_of_2",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "int2type::@05e4d98ef9d8fe14ed3f",
+					"jsonFile" : "target-int2type-Debug-fb17dd320b56a615d56e.json",
+					"name" : "int2type",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "static_assert::@4423f93b7fa2180bc98f",
+					"jsonFile" : "target-static_assert-Debug-946639f6bf45f673f2e7.json",
+					"name" : "static_assert",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "type2type_1::@96e53c15c4129368bc1b",
+					"jsonFile" : "target-type2type_1-Debug-8a2c5d14a9d4ee6cf61c.json",
+					"name" : "type2type_1",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "type2type_2::@96e53c15c4129368bc1b",
+					"jsonFile" : "target-type2type_2-Debug-58c0053f972611f93dbb.json",
+					"name" : "type2type_2",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "type2type_3::@96e53c15c4129368bc1b",
+					"jsonFile" : "target-type2type_3-Debug-dda5f76245d15159e6bc.json",
+					"name" : "type2type_3",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/Dev1l/source/repos/iMCrazyDev/HSE-Course/module-1/seminars/seminar9/out/build/x64-Debug (по умолчанию)",
+		"source" : "C:/Users/Dev1l/source/repos/iMCrazyDev/HSE-Course/module-1/seminars/seminar9"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 0
+	}
+}
