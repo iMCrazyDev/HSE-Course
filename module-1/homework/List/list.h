@@ -55,7 +55,6 @@ private:
         Node() : prev(nullptr), next(nullptr), value(0) { }
     };
 
-    void __init__();
     void __push_first__(const int& value);
     void __remove_node_(Node* nd);
 

@@ -1,16 +1,8 @@
 #include "list.h"
 #include <iostream>
 
-void task::list::__init__()
-{
-	head = nullptr;
-	tail = head;
-	_size = 0;
-}
 
-task::list::list() {
-	__init__();
-}
+task::list::list() : head(nullptr),tail(nullptr),_size(0) { }
 
 task::list::list(const list& other) : list() {
 	operator=(other);
@@ -28,6 +20,9 @@ task::list::~list() {
 }
 
 task::list& task::list::operator=(const list& other) {
+	if (this == &other)
+		return *this;
+		
 	clear();
 	
 	task::list::Node* it = other.head;
@@ -45,8 +40,7 @@ int& task::list::front() {
 }
 
 const int& task::list::front() const {
-	int nul = 0;
-	return head == nullptr ? nul : head->value;
+	return head == nullptr ? 0 : head->value;
 }
 
 int& task::list::back() {
@@ -55,8 +49,7 @@ int& task::list::back() {
 }
 
 const int& task::list::back() const {
-	int nul = 0;
-	return tail == nullptr ? nul : tail->prev->value;
+	return tail == nullptr ? 0 : tail->prev->value;
 }
 
 bool task::list::empty() const {
@@ -126,8 +119,10 @@ void task::list::pop_front() {
 }
 
 void task::list::resize(size_t count) {
-	while (_size > count) pop_back();
-	while (_size < count) push_back(0);
+	while (_size > count)
+		pop_back();
+	while (_size < count) 
+		push_back(0);
 }
 
 void task::list::swap(list& other) {
@@ -136,20 +131,23 @@ void task::list::swap(list& other) {
 	std::swap(other._size, _size);
 }
 
-void task::list::__remove_node_(Node* nd)
+void task::list::__remove_node_(Node* node)
 {
 	_size--;
-	if (nd->prev != nullptr)
+	if (node->prev != nullptr)
 	{
-		nd->prev->next = nd->next;
+		node->prev->next = node->next;
 	}
-	else head = nd->next;
+	else head = node->next;
 	if (head == tail) {
-		delete head; head = nullptr; tail = nullptr;
+		delete head; 
+		head = nullptr; 
+		tail = nullptr;
 	}
-	else nd->next->prev = nd->prev;
-
-	delete nd;
+	else {
+		node->next->prev = node->prev;
+	}
+	delete node;
 }
 
 void task::list::remove(const int& _value) {
