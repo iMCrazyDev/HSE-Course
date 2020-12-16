@@ -1,0 +1,15 @@
+﻿################################################################################
+# Данный GITIGNORE-файл был автоматически создан Microsoft(R) Visual Studio.
+################################################################################
+
+/module-1/seminars/seminar9/out/build/x64-Debug (по умолчанию)
+/module-1/seminars/seminar2/out/build/x64-Debug (по умолчанию)
+/module-1/seminars/seminar1/out/build/x64-Debug (по умолчанию)
+/module-1/seminars/seminar10/out/build/x64-Debug (по умолчанию)
+/module-1/homework/TypeList/out/build/x64-Debug (по умолчанию)
+/module-1/homework/List/out/build
+/module-1/homework/List/CMakeFiles
+/module-1/homework/List/build
+/.vs
+/.idea
+/drop
